@@ -1,7 +1,7 @@
 $(document).ready(function() {
-  var $numbers = $('span.number') // same thing as .number , span is not needed
-  var $operators = $('span.operator') // same thing as .operator, span is not needed
-  var $clear = $('span#clear') // same thing as '#clear', span is not needed
+  var $numbers = $('span.number')
+  var $operators = $('span.operator')
+  var $clear = $('span#clear')
   var $equals = $('span#equals')
 
   $numbers.click(appendNumber)
@@ -33,35 +33,26 @@ function appendOperator() {
 
 function clearScreen() {
   $screen.text('')
-  //you could also clear it by doing...
-  //$screen.empty()
 }
 
 function evaluateEquation() {
   var $screenText = $screen.text()
   var $currentOperator = $(this).text()
-
   var indexToSliceAt;
   var slicedText = ''
-console.log($screenText.length);
-for (var i =0; i <$screenText.length; i++){
-  if($screenText[i] === "÷"){
-    indexToSliceAt = (i)
-    console.log(indexToSliceAt);
-    slicedText = $screenText.slice(indexToSliceAt)
-    console.log(slicedText);
+
+  for (var i = 0; i < $screenText.length; i++) {
+    if ($screenText[i] === "÷") {
+      indexToSliceAt = (i)
+      slicedText = $screenText.slice(indexToSliceAt)
+    }
   }
-}
-
-
-  // if digits between +,-,/,* and $currentOperator are all 0, return error
 
   if ($screenText === 'Error') {
     console.log("invalid input")
   } else {
     $screen.text($screenText + $currentOperator)
   }
-
 
   if ($screenText.includes('x')) {
     $screenText = $screenText.replace('x', '*')
@@ -83,11 +74,10 @@ for (var i =0; i <$screenText.length; i++){
     $screen.text('Error')
   } else if (lastChar === "+" || lastChar === "-" || lastChar === "*" || lastChar === "÷") {
     $screen.text('Error')
-  } else if (slicedText === "÷0" || slicedText === "÷00"){
+  } else if (slicedText === "÷0" || slicedText === "÷00") {
     $screen.text('Error')
   } else {
     var result = eval($screenText)
     $screen.text(result)
   }
-  //***you NEED to remove/delete the span operator from equals in HTML for this to work****
 }
